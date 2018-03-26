@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Xamarin.PropertyEditing.Tests</RootNamespace>
     <AssemblyName>Xamarin.PropertyEditing.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <RestorePackagesPath>$(MSBuildThisFileDirectory)packages\</RestorePackagesPath>
     <NuGetPackageImportStamp>
@@ -125,13 +125,13 @@
     <None Include="Manual\BrushEditor.md" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Xamarin.PropertyEditing\Xamarin.PropertyEditing.csproj">
-      <Project>{A0B6FE73-D046-4E1C-BA9D-F20683889C5A}</Project>
-      <Name>Xamarin.PropertyEditing</Name>
-    </ProjectReference>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
-    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+    <ProjectReference Include="..\Xamarin.PropertyEditing\Xamarin.PropertyEditing.csproj">
+      <Project>{555c8f4f-8861-4237-a692-2bc990b92bda}</Project>
+      <Name>Xamarin.PropertyEditing</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

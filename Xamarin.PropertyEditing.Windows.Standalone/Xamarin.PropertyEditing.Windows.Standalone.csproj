@@ -9,6 +9,7 @@
     <RootNamespace>Xamarin.PropertyEditing.Windows.Standalone</RootNamespace>
     <AssemblyName>Xamarin.PropertyEditing.Windows.Standalone</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
@@ -130,7 +131,7 @@
       <Name>Xamarin.PropertyEditing.Windows</Name>
     </ProjectReference>
     <ProjectReference Include="..\Xamarin.PropertyEditing\Xamarin.PropertyEditing.csproj">
-      <Project>{a0b6fe73-d046-4e1c-ba9d-f20683889c5a}</Project>
+      <Project>{555c8f4f-8861-4237-a692-2bc990b92bda}</Project>
       <Name>Xamarin.PropertyEditing</Name>
     </ProjectReference>
   </ItemGroup>
