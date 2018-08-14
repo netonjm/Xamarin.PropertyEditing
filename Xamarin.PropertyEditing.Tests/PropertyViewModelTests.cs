@@ -108,16 +108,14 @@ namespace Xamarin.PropertyEditing.Tests
 		{
 			TValue testValue = GetRandomTestValue ();
 
-			var mockEditor = GetBasicEditor ();
-			var property = mockEditor.Properties.First ();
-			var vm = GetViewModel (property, new[] { mockEditor });
+			var property = GetPropertyMock ();
+			var mockEditor = new Mock<IObjectEditor> ();
+			mockEditor.SetupGet (oe => oe.Properties).Returns (new[] { property.Object });
 
-			mockEditor.values[property] = new ValueInfo<TValue> {
-				Value = testValue,
-				Source = ValueSource.Local
-			};
+			var vm = GetViewModel (property.Object, new[] { mockEditor.Object });
 
-			mockEditor.ChangeAllProperties();
+			SetupPropertyGet (mockEditor, property.Object, testValue);
+			mockEditor.Raise (oe => oe.PropertyChanged += null, new EditorPropertyChangedEventArgs (null));
 
 			Assert.That (vm.Value, Is.EqualTo (testValue));
 		}
@@ -1085,6 +1083,17 @@ namespace Xamarin.PropertyEditing.Tests
 			Assert.That (requested, Is.True, "CreateResourceRequested did not fire");
 		}
 
+		[Test]
+		public void HasVariations ()
+		{
+			var mockProperty = GetPropertyMock ();
+			mockProperty.SetupGet (v => v.Variations).Returns (new[] { new PropertyVariation ("Category", "Value") });
+			var editor = new MockObjectEditor (mockProperty.Object);
+
+			var vm = GetViewModel (mockProperty.Object, editor);
+			Assert.That (vm.HasVariations, Is.True);
+		}
+
 		protected TViewModel GetViewModel (IPropertyInfo property, IObjectEditor editor)
 		{
 			return GetViewModel (property, new[] { editor });
@@ -1117,7 +1126,7 @@ namespace Xamarin.PropertyEditing.Tests
 			};
 
 			editorMock.Setup (oe => oe.SetValueAsync (property, It.IsAny<ValueInfo<TValue>> (), null))
-				.Callback<IPropertyInfo, ValueInfo<TValue>, PropertyVariation> ((p, vi, v) => {
+				.Callback<IPropertyInfo, ValueInfo<TValue>, PropertyVariationSet> ((p, vi, v) => {
 					valueInfo = vi;
 					editorMock.Raise (oe => oe.PropertyChanged += null, new EditorPropertyChangedEventArgs (property));
 				})
@@ -1190,7 +1199,10 @@ namespace Xamarin.PropertyEditing.Tests
 		protected internal MockObjectEditor GetBasicEditor (TValue value, IPropertyInfo property = null)
 		{
 			var editor = GetBasicEditor (property);
-			editor.values[editor.Properties.First ()] = value;
+			editor.SetValueAsync (editor.Properties.First (), new ValueInfo<TValue> {
+				Value = value,
+				Source = ValueSource.Local
+			}).Wait();
 			return editor;
 		}
 

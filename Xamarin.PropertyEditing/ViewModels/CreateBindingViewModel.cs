@@ -33,7 +33,7 @@ namespace Xamarin.PropertyEditing.ViewModels
 	internal class CreateBindingViewModel
 		: PropertiesViewModel, IProvidePath
 	{
-		public CreateBindingViewModel (TargetPlatform platform, IObjectEditor targetEditor, IPropertyInfo property, PropertyVariation variation = null)
+		public CreateBindingViewModel (TargetPlatform platform, IObjectEditor targetEditor, IPropertyInfo property, PropertyVariationSet variations = null)
 			: base (platform)
 		{
 			if (platform == null)
@@ -49,7 +49,7 @@ namespace Xamarin.PropertyEditing.ViewModels
 			this.targetEditor = targetEditor;
 			this.property = property;
 			this.provider = platform.BindingProvider;
-			this.variation = variation;
+			this.variations = variations;
 
 			PropertyDisplay = String.Format (Resources.CreateDataBindingTitle, $"[{this.targetEditor.TargetType.Name}].{property.Name}");
 			RequestNamedDisplay ();
@@ -456,7 +456,7 @@ namespace Xamarin.PropertyEditing.ViewModels
 		private static readonly Resource NoValueConverter = new Resource (Resources.NoValueConverter);
 		private static readonly Resource AddValueConverter = new Resource ("<" + Resources.AddValueConverterEllipsis + ">");
 
-		private readonly PropertyVariation variation;
+		private readonly PropertyVariationSet variations;
 		private readonly IObjectEditor targetEditor;
 		private readonly IPropertyInfo property;
 		private readonly IBindingProvider provider;
