@@ -54,8 +54,8 @@ namespace Xamarin.PropertyEditing.ViewModels
 	internal class CollectionPropertyViewModel
 		: PropertyViewModel<IList>
 	{
-		public CollectionPropertyViewModel (TargetPlatform platform, IPropertyInfo property, IEnumerable<IObjectEditor> editors)
-			: base (platform, property, editors)
+		public CollectionPropertyViewModel (TargetPlatform platform, IPropertyInfo property, IEnumerable<IObjectEditor> editors, PropertyVariationSet variant = null)
+			: base (platform, property, editors, variant)
 		{
 			if (this.cachedProvider == null)
 				this.cachedProvider = new CachedEditorProvider (platform.EditorProvider);
