@@ -155,19 +155,33 @@ namespace Xamarin.PropertyEditing.Tests
 			return ReflectionObjectEditor.GetAssignableTypes (property.RealType, childTypes);
 		}
 
-		public Task<IReadOnlyCollection<PropertyVariationSet>> GetPropertyVariantsAsync (IPropertyInfo property)
+		public Task<IReadOnlyCollection<PropertyVariation>> GetPropertyVariantsAsync (IPropertyInfo property)
 		{
 			if (property == null)
 				throw new ArgumentNullException (nameof(property));
 
-			if (!this.values.TryGetValue (property, out IDictionary<PropertyVariationSet, object> propertyValues)) {
-				return Task.FromResult<IReadOnlyCollection<PropertyVariationSet>> (new PropertyVariationSet[0]);
+			if (!this.values.TryGetValue (property, out IDictionary<PropertyVariation, object> propertyValues)) {
+				return Task.FromResult<IReadOnlyCollection<PropertyVariation>> (new PropertyVariation[0]);
 			}
 
-			return Task.FromResult<IReadOnlyCollection<PropertyVariationSet>> (propertyValues.Keys.Except (new[] { NeutralVariations }).ToList ());
+			return Task.FromResult<IReadOnlyCollection<PropertyVariation>> (propertyValues.Keys.Except (new[] { NeutralVariations }).ToList ());
 		}
 
-		public Task SetValueAsync<T> (IPropertyInfo property, ValueInfo<T> value, PropertyVariationSet variations = null)
+		public Task RemovePropertyVariantAsync (IPropertyInfo property, PropertyVariation variant)
+		{
+			if (property == null)
+				throw new ArgumentNullException (nameof(property));
+			if (variant == null)
+				throw new ArgumentNullException (nameof(variant));
+
+			if (this.values.TryGetValue (property, out IDictionary<PropertyVariation, object> propertyValues)) {
+				propertyValues.Remove (variant);
+			}
+
+			return Task.CompletedTask;
+		}
+
+		public Task SetValueAsync<T> (IPropertyInfo property, ValueInfo<T> value, PropertyVariation variations = null)
 		{
 			value = new ValueInfo<T> {
 				CustomExpression = value.CustomExpression,
@@ -177,8 +191,8 @@ namespace Xamarin.PropertyEditing.Tests
 				Value = value.Value
 			};
 
-			if (!this.values.TryGetValue (property, out IDictionary<PropertyVariationSet, object> propertyValues)) {
-				this.values[property] = propertyValues = new Dictionary<PropertyVariationSet, object> ();
+			if (!this.values.TryGetValue (property, out IDictionary<PropertyVariation, object> propertyValues)) {
+				this.values[property] = propertyValues = new Dictionary<PropertyVariation, object> ();
 			}
 
 			if (value.Source != ValueSource.Local && ValueEvaluator != null) {
@@ -242,11 +256,11 @@ namespace Xamarin.PropertyEditing.Tests
 			return Task.CompletedTask;
 		}
 
-		public Task<ValueInfo<T>> GetValueAsync<T> (IPropertyInfo property, PropertyVariationSet variations = null)
+		public Task<ValueInfo<T>> GetValueAsync<T> (IPropertyInfo property, PropertyVariation variations = null)
 		{
 			Type tType = typeof(T);
 
-			IDictionary<PropertyVariationSet, object> propertyValues;
+			IDictionary<PropertyVariation, object> propertyValues;
 			if (!this.values.TryGetValue (property, out propertyValues) || !propertyValues.TryGetValue (variations ?? NeutralVariations, out object value)) {
 				return Task.FromResult (new ValueInfo<T> {
 					Source = (property.ValueSources.HasFlag (ValueSources.Default))
@@ -332,10 +346,10 @@ namespace Xamarin.PropertyEditing.Tests
 			});
 		}
 
-		public Task<ITypeInfo> GetValueTypeAsync (IPropertyInfo property, PropertyVariationSet variations = null)
+		public Task<ITypeInfo> GetValueTypeAsync (IPropertyInfo property, PropertyVariation variations = null)
 		{
 			Type type = property.Type;
-			if (this.values.TryGetValue (property, out IDictionary<PropertyVariationSet, object> propertyValues) && propertyValues.TryGetValue (variations ?? NeutralVariations, out object value)) {
+			if (this.values.TryGetValue (property, out IDictionary<PropertyVariation, object> propertyValues) && propertyValues.TryGetValue (variations ?? NeutralVariations, out object value)) {
 				Type valueType = value.GetType ();
 				if (valueType.IsConstructedGenericType && valueType.GetGenericTypeDefinition () == typeof(ValueInfo<>)) {
 					value = valueType.GetProperty ("Value").GetValue (value);
@@ -348,9 +362,9 @@ namespace Xamarin.PropertyEditing.Tests
 			return Task.FromResult<ITypeInfo> (new TypeInfo (asm, type.Namespace, type.Name));
 		}
 
-		private static readonly PropertyVariationSet NeutralVariations = new PropertyVariationSet();
+		private static readonly PropertyVariation NeutralVariations = new PropertyVariation();
 
-		private readonly IDictionary<IPropertyInfo,IDictionary<PropertyVariationSet, object>> values = new Dictionary<IPropertyInfo, IDictionary<PropertyVariationSet, object>> ();
+		private readonly IDictionary<IPropertyInfo,IDictionary<PropertyVariation, object>> values = new Dictionary<IPropertyInfo, IDictionary<PropertyVariation, object>> ();
 		internal readonly IDictionary<IEventInfo, string> events = new Dictionary<IEventInfo, string> ();
 		internal readonly IReadOnlyDictionary<IPropertyInfo, IReadOnlyList<ITypeInfo>> assignableTypes;
 	}

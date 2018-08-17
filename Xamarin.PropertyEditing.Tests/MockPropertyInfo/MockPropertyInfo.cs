@@ -8,7 +8,7 @@ namespace Xamarin.PropertyEditing.Tests.MockPropertyInfo
 {
 	public class MockPropertyInfo<T> : IPropertyInfo, IPropertyConverter, IEquatable<MockPropertyInfo<T>>
 	{
-		public MockPropertyInfo (string name, string description = null, string category = null, bool canWrite = true, IEnumerable<Type> converterTypes = null, ValueSources valueSources = ValueSources.Local | ValueSources.Default, PropertyVariation[] variations = null)
+		public MockPropertyInfo (string name, string description = null, string category = null, bool canWrite = true, IEnumerable<Type> converterTypes = null, ValueSources valueSources = ValueSources.Local | ValueSources.Default, PropertyVariationOption[] options = null)
 		{
 			Name = name;
 			Description = description;
@@ -26,7 +26,7 @@ namespace Xamarin.PropertyEditing.Tests.MockPropertyInfo
 				this.nullConverter = new NullableConverter (typeof(Nullable<>).MakeGenericType (typeof(T)));
 			}
 
-			Variations = variations ?? EmptyVariations;
+			Variations = options ?? EmptyVariationOptions;
 		}
 
 		public string Name { get; }
@@ -38,9 +38,9 @@ namespace Xamarin.PropertyEditing.Tests.MockPropertyInfo
 		public string Category { get; }
 		public bool CanWrite { get; }
 		public ValueSources ValueSources { get; }
-		static readonly PropertyVariation[] EmptyVariations = new PropertyVariation[0];
+		static readonly PropertyVariationOption[] EmptyVariationOptions = new PropertyVariationOption[0];
 
-		public virtual IReadOnlyList<PropertyVariation> Variations { get; }
+		public virtual IReadOnlyList<PropertyVariationOption> Variations { get; }
 		static readonly IAvailabilityConstraint[] EmptyConstraints = new IAvailabilityConstraint[0];
 		public virtual IReadOnlyList<IAvailabilityConstraint> AvailabilityConstraints => EmptyConstraints;
 

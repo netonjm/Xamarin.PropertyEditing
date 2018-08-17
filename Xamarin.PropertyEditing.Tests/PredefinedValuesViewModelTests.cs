@@ -253,7 +253,7 @@ namespace Xamarin.PropertyEditing.Tests
 			vm.ValueName = GetRandomValueName();
 			vm.ValueName = null;
 
-			editor.Verify (oe => oe.SetValueAsync (property.Object, It.Is<ValueInfo<string>> (f => Equals (f.ValueDescriptor, String.Empty)), It.IsAny<PropertyVariationSet> ()));
+			editor.Verify (oe => oe.SetValueAsync (property.Object, It.Is<ValueInfo<string>> (f => Equals (f.ValueDescriptor, String.Empty)), It.IsAny<PropertyVariation> ()));
 		}
 	}
 
@@ -288,7 +288,7 @@ namespace Xamarin.PropertyEditing.Tests
 
 			vm.ValueName = "test";
 
-			editor.Verify (oe => oe.SetValueAsync (property.Object, It.Is<ValueInfo<string>> (f => Equals (f.ValueDescriptor, "test") && f.Source == ValueSource.Local), It.IsAny<PropertyVariationSet> ()));
+			editor.Verify (oe => oe.SetValueAsync (property.Object, It.Is<ValueInfo<string>> (f => Equals (f.ValueDescriptor, "test") && f.Source == ValueSource.Local), It.IsAny<PropertyVariation> ()));
 		}
 
 		[Test]
@@ -311,7 +311,7 @@ namespace Xamarin.PropertyEditing.Tests
 			vm.ValueName = "test";
 			vm.ValueName = null;
 
-			editor.Verify (oe => oe.SetValueAsync (property.Object, It.Is<ValueInfo<string>> (vi => Equals (vi.ValueDescriptor, String.Empty) && vi.Source == ValueSource.Local), It.IsAny<PropertyVariationSet> ()));
+			editor.Verify (oe => oe.SetValueAsync (property.Object, It.Is<ValueInfo<string>> (vi => Equals (vi.ValueDescriptor, String.Empty) && vi.Source == ValueSource.Local), It.IsAny<PropertyVariation> ()));
 		}
 
 		protected override string GetRandomTestValue (Random rand)

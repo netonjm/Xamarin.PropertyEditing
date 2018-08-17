@@ -17,14 +17,14 @@ namespace Xamarin.PropertyEditing.Tests.MockControls
 			AddProperty<float> ("FloatingPoint", ReadWrite);
 			AddProperty<string> ("String", ReadWrite, valueSources: ValueSources.Local | ValueSources.Resource | ValueSources.Binding);
 			AddProperty<string> ("StringV", ReadWrite, valueSources: ValueSources.Local | ValueSources.Resource | ValueSources.Binding,
-				variations: new [] {
-					new PropertyVariation ("Width", "Compact"),
-					new PropertyVariation ("Width", "Regular"),
-					new PropertyVariation ("Gamut", "P3"),
-					new PropertyVariation ("Gamut", "sRGB"),
-					new PropertyVariation ("OnPlatform", "iOS"),
-					new PropertyVariation ("OnPlatform", "Android"),
-					new PropertyVariation ("OnPlatform", "UWP"),
+				options: new [] {
+					new PropertyVariationOption ("Width", "Compact"),
+					new PropertyVariationOption ("Width", "Regular"),
+					new PropertyVariationOption ("Gamut", "P3"),
+					new PropertyVariationOption ("Gamut", "sRGB"),
+					new PropertyVariationOption ("OnPlatform", "iOS"),
+					new PropertyVariationOption ("OnPlatform", "Android"),
+					new PropertyVariationOption ("OnPlatform", "UWP"),
 				});
 			AddProperty<Enumeration> ("Enumeration", ReadWrite);
 			AddProperty<FlagsNoValues> ("FlagsNoValues", ReadWrite, canWrite: true, flag: true);
