@@ -545,4 +545,13 @@
   <data name="Custom" xml:space="preserve">
     <value>Custom</value>
   </data>
+  <data name="AddVariationHelpText" xml:space="preserve">
+    <value>Introduce variation based on:</value>
+  </data>
+  <data name="AddVariationTitle" xml:space="preserve">
+    <value>Add a Variation</value>
+  </data>
+  <data name="Any" xml:space="preserve">
+    <value>Any</value>
+  </data>
 </root>

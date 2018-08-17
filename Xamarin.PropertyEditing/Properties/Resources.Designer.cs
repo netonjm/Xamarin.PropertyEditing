@@ -79,6 +79,24 @@ namespace Xamarin.PropertyEditing.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Introduce variation based on:.
+        /// </summary>
+        public static string AddVariationHelpText {
+            get {
+                return ResourceManager.GetString("AddVariationHelpText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add a Variation.
+        /// </summary>
+        public static string AddVariationTitle {
+            get {
+                return ResourceManager.GetString("AddVariationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Alpha.
         /// </summary>
         public static string Alpha {
@@ -93,6 +111,15 @@ namespace Xamarin.PropertyEditing.Properties {
         public static string AlphaInitial {
             get {
                 return ResourceManager.GetString("AlphaInitial", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Any.
+        /// </summary>
+        public static string Any {
+            get {
+                return ResourceManager.GetString("Any", resourceCulture);
             }
         }
         
