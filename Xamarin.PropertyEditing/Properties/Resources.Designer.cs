@@ -403,6 +403,15 @@ namespace Xamarin.PropertyEditing.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error creating variant: {0}. If this error continues, please report it..
+        /// </summary>
+        public static string ErrorCreatingVariant {
+            get {
+                return ResourceManager.GetString("ErrorCreatingVariant", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Event handlers for the selected element.
         /// </summary>
         public static string EventHandlersSelectedElement {

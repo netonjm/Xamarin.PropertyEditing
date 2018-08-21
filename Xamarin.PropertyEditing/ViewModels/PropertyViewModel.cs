@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Xamarin.PropertyEditing.Properties;
 
 namespace Xamarin.PropertyEditing.ViewModels
 {
@@ -384,7 +385,7 @@ namespace Xamarin.PropertyEditing.ViewModels
 				await SetValueAsyncCore (CurrentValue, args.Variation);
 				OnVariationsChanged ();
 			} catch (Exception ex) {
-				throw; // TODO: Display
+				TargetPlatform.ReportError (String.Format (Resources.ErrorCreatingVariant, ex.Message), ex);
 			}
 		}
 
