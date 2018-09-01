@@ -69,18 +69,24 @@ namespace Xamarin.PropertyEditing.Reflection
 
 		public virtual async Task<T> GetValueAsync<T> (object target)
 		{
-			object value = this.propertyInfo.GetValue (target);
-			T converted;
-			if (TryConvertToValue (value, out converted)) {
-				value = converted;
-			} else if (value != null && !(value is T)) {
-				if (typeof(T) == typeof(string))
-					value = value.ToString ();
-				else
-					value = Convert.ChangeType (value, typeof(T));
+			try {
+				object value = this.propertyInfo.GetValue (target);
+				T converted;
+				if (TryConvertToValue (value, out converted)) {
+					value = converted;
+				} else if (value != null && !(value is T)) {
+					if (typeof (T) == typeof (string))
+						value = value.ToString ();
+					else
+						value = Convert.ChangeType (value, typeof (T));
+				}
+
+				return (T)value;
+
+			} catch (Exception ex) {
+				return default (T);
 			}
 
-			return (T)value;
 		}
 #pragma warning restore CS1998
 

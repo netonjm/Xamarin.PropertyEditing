@@ -10,6 +10,8 @@ namespace Xamarin.PropertyEditing.Mac
 	internal class PropertyTableDataSource
 		: NSOutlineViewDataSource
 	{
+		bool Filtering => !string.IsNullOrEmpty (this.vm.FilterText);
+
 		internal PropertyTableDataSource (PanelViewModel panelVm)
 		{
 			if (panelVm == null)
@@ -26,10 +28,10 @@ namespace Xamarin.PropertyEditing.Mac
 				return 0;
 
 			if (this.vm.ArrangeMode == PropertyArrangeMode.Name)
-				return this.vm.ArrangedEditors[0].Count;
+				return Filtering ? this.vm.ArrangedEditors[0].Count : this.vm.ArrangedEditors[0].Count + 1;
 
 			if (item == null)
-				return this.vm.ArrangedEditors.Count;
+				return Filtering ? this.vm.ArrangedEditors[0].Count : this.vm.ArrangedEditors.Count + 1;
 			else {
 				return ((IGroupingList<string, EditorViewModel>)((NSObjectFacade)item).Target).Count;
 			}
@@ -39,12 +41,15 @@ namespace Xamarin.PropertyEditing.Mac
 		{
 			object element;
 			if (this.vm.ArrangeMode == PropertyArrangeMode.Name) {
-				element = (this.vm.ArrangedEditors[0][(int)childIndex]);
+				if (childIndex == 0 && !Filtering)
+					element = new PanelHeaderEditorControl (this.vm);
+				else
+					element = Filtering ? this.vm.ArrangedEditors[0][(int)childIndex] : this.vm.ArrangedEditors[0][(int)childIndex - 1];
 			} else {
 				if (item == null)
-					element = this.vm.ArrangedEditors[(int)childIndex];
+					element = Filtering ? this.vm.ArrangedEditors[(int)childIndex] : this.vm.ArrangedEditors[(int)childIndex - 1];
 				else {
-					element = ((IGroupingList<string, EditorViewModel>)((NSObjectFacade)item).Target)[(int)childIndex];
+					element = ((IGroupingList<string, EditorViewModel>)((NSObjectFacade)item).Target)[(int)childIndex - 1];
 				}
 			}
 

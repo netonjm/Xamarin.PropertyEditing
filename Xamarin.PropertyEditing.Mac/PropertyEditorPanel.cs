@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Xamarin.PropertyEditing.Mac
 {
-	public partial class PropertyEditorPanel : AppKit.NSView
+	public partial class PropertyEditorPanel : NSView
 	{
 		internal const string PropertyListColId = "PropertiesList";
 		internal const string PropertyEditorColId = "PropertyEditors";
@@ -191,7 +191,7 @@ namespace Xamarin.PropertyEditing.Mac
 				tableContainer.ConstraintTo(this, (t, c) => t.Top == c.Top + 30),
 				tableContainer.ConstraintTo(this, (t, c) => t.Left == c.Left + 10),
 				tableContainer.ConstraintTo(this, (t, c) => t.Width == c.Width - 20),
-				tableContainer.ConstraintTo(this, (t, c) => t.Height == c.Height - 40),
+				tableContainer.ConstraintTo(this, (t, c) => t.Height == c.Height - 37),
 			});
 
 			ThemeManager.ThemeChanged += ThemeManager_ThemeChanged;
