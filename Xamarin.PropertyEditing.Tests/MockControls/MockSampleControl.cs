@@ -23,7 +23,7 @@ namespace Xamarin.PropertyEditing.Tests.MockControls
 			AddProperty<CommonSize> ("Size", ReadWrite);
 			AddProperty<CommonRectangle> ("Rectangle", ReadWrite);
 			AddProperty<CommonRatio> ("Ratio", ReadWrite);
-			// AddProperty<CommonThickness> ("Thickness", ReadWrite); // Lacking support on the mac at this point in time.
+			AddProperty<CommonThickness> ("Thickness", ReadWrite);
 			AddProperty<object> ("Object", ReadWrite);
 			AddProperty<IList> ("Collection", ReadWrite);
 
@@ -38,7 +38,7 @@ namespace Xamarin.PropertyEditing.Tests.MockControls
 			AddReadOnlyProperty<CommonSize> ("ReadOnlySize", ReadOnly);
 			AddReadOnlyProperty<CommonRectangle> ("ReadOnlyRectangle", ReadOnly);
 			AddReadOnlyProperty<CommonRatio> ("ReadOnlyRatio", ReadOnly);
-			// AddReadOnlyProperty<CommonThickness> ("ReadOnlyThickness", ReadOnly);
+			AddReadOnlyProperty<CommonThickness> ("ReadOnlyThickness", ReadOnly);
 
 			AddProperty<NotImplemented> ("Uncategorized", None);
 
