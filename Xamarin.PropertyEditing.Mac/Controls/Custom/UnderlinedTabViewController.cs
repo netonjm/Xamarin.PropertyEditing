@@ -36,8 +36,8 @@ namespace Xamarin.PropertyEditing.Mac
 
 		private NSStackView outerStack;
 		private NSStackView innerStack;
-		private NSStackView tabStack = new NSStackView () {
-			Spacing = 2f,
+		protected NSStackView tabStack = new NSStackView () {
+			Spacing = 10f,
 		};
 
 		private NSEdgeInsets edgeInsets = new NSEdgeInsets (0, 0, 0, 0);
