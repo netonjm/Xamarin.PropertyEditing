@@ -21,11 +21,23 @@ namespace Xamarin.PropertyEditing.Mac
 			};
 			AddSubview (propertyObjectNameLabel);
 
+			var propertyTypeNameLabel = new UnfocusableTextField {
+				Alignment = NSTextAlignment.Right,
+				StringValue = Properties.Resources.Type + ":",
+				TranslatesAutoresizingMaskIntoConstraints = false,
+			};
+			AddSubview (propertyTypeNameLabel);
+
 			this.DoConstraints (new NSLayoutConstraint[] {
 				propertyObjectNameLabel.ConstraintTo(this, (ol, c) => ol.Top == c.Top),
 				propertyObjectNameLabel.ConstraintTo(this, (ol, c) => ol.Left == c.Left + 182),
 				propertyObjectNameLabel.ConstraintTo(this, (ol, c) => ol.Width == 40),
 				propertyObjectNameLabel.ConstraintTo(this, (ol, c) => ol.Height == PropertyEditorControl.DefaultControlHeight),
+
+				propertyTypeNameLabel.ConstraintTo(this, (tl, c) => tl.Top == c.Top + 22),
+				propertyTypeNameLabel.ConstraintTo(this, (tl, c) => tl.Left == c.Left + 182),
+				propertyTypeNameLabel.ConstraintTo(this, (tl, c) => tl.Width == 40),
+				propertyTypeNameLabel.ConstraintTo(this, (tl, c) => tl.Height == PropertyEditorControl.DefaultControlHeight),
 			});
 		}
 	}
@@ -58,11 +70,22 @@ namespace Xamarin.PropertyEditing.Mac
 
 			AddSubview (this.propertyObjectName);
 
+			var propertyTypeName = new UnfocusableTextField {
+				StringValue = viewModel.TypeName,
+				TranslatesAutoresizingMaskIntoConstraints = false,
+			};
+			AddSubview (propertyTypeName);
+
 			this.DoConstraints (new NSLayoutConstraint[] {
 				this.propertyObjectName.ConstraintTo(this, (on, c) => on.Top == c.Top + 2),
 				this.propertyObjectName.ConstraintTo(this, (on, c) => on.Left == c.Left + 4),
 				this.propertyObjectName.ConstraintTo(this, (on, c) => on.Width == c.Width - 34),
 				this.propertyObjectName.ConstraintTo(this, (on, c) => on.Height == DefaultControlHeight - 3),
+
+				propertyTypeName.ConstraintTo(this, (tn, c) => tn.Top == c.Top + 22),
+				propertyTypeName.ConstraintTo(this, (tn, c) => tn.Left == c.Left + 4),
+				propertyTypeName.ConstraintTo(this, (tn, c) => tn.Width == c.Width - 34),
+				propertyTypeName.ConstraintTo(this, (tn, c) => tn.Height == DefaultControlHeight),
 			});
 
 			UpdateValue ();
@@ -113,6 +136,11 @@ namespace Xamarin.PropertyEditing.Mac
 				this.propertyObjectName.StringValue = this.viewModel.ObjectName ?? string.Empty;
 				this.propertyObjectName.Editable = !this.viewModel.IsObjectNameReadOnly;
 			}
+		}
+
+		public override nint GetHeight (PropertyViewModel vm)
+		{
+			return 44;
 		}
 	}
 }
