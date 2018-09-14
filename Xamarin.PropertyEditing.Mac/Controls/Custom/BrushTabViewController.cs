@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using AppKit;
@@ -27,6 +28,13 @@ namespace Xamarin.PropertyEditing.Mac
 		}
 
 		NSView IEditorView.NativeView => View;
+
+		public bool IsDynamicallySized => false;
+
+		public nint GetHeight (EditorViewModel viewModel)
+		{
+			return (int)(PreferredContentSize.Height + EdgeInsets.Top + EdgeInsets.Bottom);
+		}
 
 		public override void OnViewModelChanged (BrushPropertyViewModel oldModel)
 		{
