@@ -201,11 +201,13 @@ namespace Xamarin.PropertyEditing.Mac
 			if (view != null)
 				return view;
 
-			view = this.editorSelector.GetEditor (vm);
-			if (view != null) {
-				view.Identifier = identifier;
-				view.TableView = outlineView;
-			}
+			IEditorView editor = this.editorSelector.GetEditor (vm);
+			if (editor == null)
+				return null;
+
+			view = (PropertyEditorControl)editor.NativeView;
+			view.Identifier = identifier;
+			view.TableView = outlineView;
 
 			return view;
 		}

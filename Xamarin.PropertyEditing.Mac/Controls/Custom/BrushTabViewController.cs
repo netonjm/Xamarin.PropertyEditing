@@ -8,7 +8,8 @@ using Xamarin.PropertyEditing.ViewModels;
 
 namespace Xamarin.PropertyEditing.Mac
 {
-	internal class BrushTabViewController : UnderlinedTabViewController<BrushPropertyViewModel>
+	internal class BrushTabViewController
+		: UnderlinedTabViewController<BrushPropertyViewModel>, IEditorView
 	{
 		public BrushTabViewController ()
 		{
@@ -19,6 +20,13 @@ namespace Xamarin.PropertyEditing.Mac
 
 		Dictionary<CommonBrushType, int> BrushTypeTable = new Dictionary<CommonBrushType, int> ();
 		bool inhibitSelection;
+
+		EditorViewModel IEditorView.ViewModel {
+			get { return this.ViewModel; }
+			set { ViewModel = (BrushPropertyViewModel)value; }
+		}
+
+		NSView IEditorView.NativeView => View;
 
 		public override void OnViewModelChanged (BrushPropertyViewModel oldModel)
 		{

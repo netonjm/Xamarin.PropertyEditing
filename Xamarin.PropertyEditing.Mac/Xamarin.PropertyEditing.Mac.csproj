@@ -135,6 +135,7 @@
     <Compile Include="Controls\RequestResource\ResourceTableDelegate.cs" />
     <Compile Include="Controls\RequestResource\RequestResourcePreviewPanel.cs" />
     <Compile Include="PropertyEditorSelector.cs" />
+    <Compile Include="Controls\IEditorView.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controls\" />
