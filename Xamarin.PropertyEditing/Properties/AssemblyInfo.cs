@@ -14,4 +14,5 @@ using System.Runtime.InteropServices;
 [assembly: InternalsVisibleTo ("Xamarin.PropertyEditing.Tests")]
 [assembly: InternalsVisibleTo ("Xamarin.PropertyEditing.Windows")]
 [assembly: InternalsVisibleTo ("Xamarin.PropertyEditing.Mac")]
+[assembly: InternalsVisibleTo ("MonoDevelop.Mac.Debug")]
 #endif
