@@ -67,20 +67,41 @@ namespace Xamarin.PropertyEditing.Reflection
 			this.propertyInfo.SetValue (target, realValue);
 		}
 
+		bool IsNative (Type target)
+		{
+			if (target.Assembly.GetName ().Name == "Xamarin.Mac") {
+				return true;
+			}
+			if (target.BaseType != null) {
+				var value = IsNative (target.BaseType);
+				if (value) {
+					return true;
+				}
+			}
+			return false;
+		}
+
 		public virtual async Task<T> GetValueAsync<T> (object target)
 		{
-			object value = this.propertyInfo.GetValue (target);
-			T converted;
-			if (TryConvertToValue (value, out converted)) {
-				value = converted;
-			} else if (value != null && !(value is T)) {
-				if (typeof(T) == typeof(string))
-					value = value.ToString ();
-				else
-					value = Convert.ChangeType (value, typeof(T));
-			}
+			try {
+				if (IsNative (target.GetType ())) {
+					return default (T);
+				}
+				object value = this.propertyInfo.GetValue (target);
+				T converted;
+				if (TryConvertToValue (value, out converted)) {
+					value = converted;
+				} else if (value != null && !(value is T)) {
+					if (typeof (T) == typeof (string))
+						value = value.ToString ();
+					else
+						value = Convert.ChangeType (value, typeof (T));
+				}
 
-			return (T)value;
+				return (T)value;
+			} catch (Exception ex) {
+				return default(T);
+			}
 		}
 #pragma warning restore CS1998
 
