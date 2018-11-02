@@ -22,5 +22,8 @@ using System.Runtime.CompilerServices;
 // The following attributes are used to specify the signing key for the assembly, 
 // if desired. See the Mono documentation for more information about signing.
 
-[assembly: InternalsVisibleTo ("MonoDevelop.Mac.Debug")]
+[assembly: InternalsVisibleTo ("MonoDevelop.Inspector.Core")]
+[assembly: InternalsVisibleTo ("MonoDevelop.Inspector.Gtk")]
+[assembly: InternalsVisibleTo ("MonoDevelop.Inspector.Mac")]
+[assembly: InternalsVisibleTo ("MonoDevelop.Inspector.XwtMac")]
 //[assembly: AssemblyKeyFile("")]
